@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const helmet = require('helmet');
 const connectDB = require('./config/db');
 const apiLimiter = require('./middleware/rateLimiter');
+const userRoute = require('./routes/userRoute');
 
 dotenv.config();
 const app = express();
@@ -20,7 +21,9 @@ app.get('/', (req, res) => {
     res.send(' DOc API is running...');
 });
 
-app.use('/documents',apiLimiter)
+app.use('/api/auth', userRoute)
+
+app.use('/api/documents',apiLimiter)
 // POST / documents - Create document
 // PUT / documents /: id - Update(creates new version)
 // GET / documents /: id - Get current version
