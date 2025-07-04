@@ -1,5 +1,6 @@
 const express = require('express');
 const { createDocument, getDocument, deleteDocument, updateDocument } = require('../controllers/documentController');
+const { getVersion, getAllVersions, rollbackVersion, getDiffById, getLatestDiff } = require('../controllers/versionController');
 const protect = require('../middleware/auth');
 const router = express.Router();
 
@@ -15,9 +16,10 @@ const router = express.Router();
 
 router.route('/').post(protect,createDocument);
 router.route('/:id').get(getDocument).delete(protect, deleteDocument). put(protect, updateDocument);
-// router.route('/:id/versions').get(listVersions);
-// router.route('/:id/versions/:versionId').get(getVersion);
-// router.route('/:id/versions/:versionId/diff').get(getDiff);
-// router.route('/:id/rollback').post(protect, rollbackVersion);
+router.route('/:id/versions/diff').get(getLatestDiff);
+router.route('/:id/versions').get(getAllVersions);
+router.route('/:id/versions/:versionId').get(getVersion);
+router.route('/:id/versions/:version1/diff/:version2').get(getDiffById);
+router.route('/:id/rollback/:versionId').post(protect, rollbackVersion);
 
 module.exports = router;
