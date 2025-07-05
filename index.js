@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', userRoute)
 
-// app.use('/api/documents',apiLimiter);
+app.use('/api/documents',apiLimiter);
 
 app.use('/api/documents', documentRoute);
 
